@@ -205,7 +205,7 @@ namespace StudentExercisesMVC.Controllers
         }
 
         //GET: Student/Delete/5
-        //[ActionName("Delete")]
+        [ActionName("Delete")]
         public ActionResult DeleteConfirm([FromRoute] int id)
         {
             Student student = null;
