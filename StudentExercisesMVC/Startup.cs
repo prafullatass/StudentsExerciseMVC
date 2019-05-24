@@ -53,6 +53,7 @@ namespace StudentExercisesMVC
             app.UseCookiePolicy();
 
             InstructorRepository.SetConfig(Configuration);
+            CohortRepository.SetConfig(Configuration);
             Main.SetConfig(Configuration);
 
             app.UseMvc(routes =>

@@ -202,7 +202,7 @@ namespace StudentExercisesMVC.Repositories
                                         WHERE Id = @id";
                     cmd.Parameters.Add(new SqlParameter("@id", id));
 
-                    cmd.ExecuteNonQuery());
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

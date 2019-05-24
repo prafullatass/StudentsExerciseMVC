@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -40,6 +41,39 @@ namespace StudentExercisesMVC.Repositories
                     DataSet ds = new DataSet();
                     reader.Fill(ds);
                     return ds;
+                }
+            }
+        }
+
+        public static int ExecuteWithScaler(string cmdText, SqlParameter[] sQLParameters)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = cmdText;
+                    if (sQLParameters != null)
+                        cmd.Parameters.AddRange(sQLParameters);
+
+                    return ((int) cmd.ExecuteScalar());
+                     
+                }
+            }
+        }
+
+        public static void ExecuteWithNonQuery(string cmdText, SqlParameter[] sQLParameters)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = cmdText;
+                    if (sQLParameters != null)
+                        cmd.Parameters.AddRange(sQLParameters);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

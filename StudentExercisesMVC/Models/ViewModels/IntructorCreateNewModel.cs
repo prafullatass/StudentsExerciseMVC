@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using StudentExercisesMVC.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,32 +12,25 @@ namespace StudentExercisesMVC.Models.ViewModels
     {
         public Instructor Instructor { get; set; }
         public List<SelectListItem> Cohorts = new List<SelectListItem>();
-        public void getAllCohorts(SqlConnection conn)
+
+        public IntructorCreateNewModel()
         {
-            using (conn)
+            MakeCohortSelectList();
+        }
+        public IntructorCreateNewModel(Instructor inst)
+        {
+            Instructor = inst;
+            MakeCohortSelectList();
+        }
+
+        public void MakeCohortSelectList()
+        {
+            List<Cohort> cohorts = CohortRepository.GetAllCohorts();
+            Cohorts = cohorts.Select(li => new SelectListItem
             {
-                conn.Open();
-                using(SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"SELECT Id, CohortName FROM Cohort";
-                    SqlDataReader reader =  cmd.ExecuteReader();
-                    List<Cohort> cohorts = new List<Cohort>();
-                    while (reader.Read())
-                    {
-                        cohorts.Add(new Cohort
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            CohortName = reader.GetString(reader.GetOrdinal("CohortName"))
-                        });
-                    }
-                    reader.Close();
-                    cohorts.Select(li => new SelectListItem
-                    {
-                        Text = li.CohortName,
-                        Value = li.Id.ToString()
-                    }).ToList();
-                }
-            }
+                Text = li.CohortName,
+                Value = li.Id.ToString()
+            }).ToList();
         }
     }
 }

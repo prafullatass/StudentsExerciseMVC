@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using StudentExercisesMVC.Models;
+using StudentExercisesMVC.Models.ViewModels;
 using StudentExercisesMVC.Repositories;
 
 namespace StudentExercisesMVC.Controllers
@@ -27,6 +29,8 @@ namespace StudentExercisesMVC.Controllers
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
+
+
         // GET: Instructor
         public ActionResult Index()
         {
@@ -44,18 +48,19 @@ namespace StudentExercisesMVC.Controllers
         // GET: Instructor/Create
         public ActionResult Create()
         {
-            return View();
+            IntructorCreateNewModel model = new IntructorCreateNewModel();
+            
+            return View(model);
         }
 
         // POST: Instructor/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(IntructorCreateNewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                int id = InstructorRepository.InsertInstructor(model.Instructor);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -67,7 +72,9 @@ namespace StudentExercisesMVC.Controllers
         // GET: Instructor/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Instructor getInst = InstructorRepository.GetSingleInstructor(id);
+            IntructorCreateNewModel model = new IntructorCreateNewModel(getInst);
+            return View(model);
         }
 
         // POST: Instructor/Edit/5
