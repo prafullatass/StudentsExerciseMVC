@@ -65,7 +65,7 @@ namespace StudentExercisesMVC.Controllers
                     return View(students);
                 }
             
-        }
+            }
             
         }
 
