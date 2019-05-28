@@ -19,8 +19,8 @@ namespace StudentExercisesMVC.Models.ViewModels
         }
         public IntructorCreateNewModel(Instructor inst)
         {
-            Instructor = inst;
             MakeCohortSelectList();
+            Instructor = inst;
         }
 
         public void MakeCohortSelectList()

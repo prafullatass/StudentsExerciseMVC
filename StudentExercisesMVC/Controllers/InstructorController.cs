@@ -80,10 +80,12 @@ namespace StudentExercisesMVC.Controllers
         // POST: Instructor/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [FromForm] IntructorCreateNewModel instructorModel)
         {
             try
             {
+               
+                InstructorRepository.UpdateInstructor(instructorModel.Instructor);
                 // TODO: Add update logic here
 
                 return RedirectToAction(nameof(Index));
@@ -95,20 +97,21 @@ namespace StudentExercisesMVC.Controllers
         }
 
         // GET: Instructor/Delete/5
-        public ActionResult Delete(int id)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirm(int id)
         {
-            return View();
+            Instructor instructor = InstructorRepository.GetSingleInstructor(id);
+            return View(instructor);
         }
 
         // POST: Instructor/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                InstructorRepository.DeleteInstructor(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

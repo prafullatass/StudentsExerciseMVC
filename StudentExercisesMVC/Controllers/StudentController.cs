@@ -260,5 +260,32 @@ namespace StudentExercisesMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        
+            [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignExercise([FromRoute]int id, [FromForm] StudentEditViewModel model)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Student SET FirstName = @firstName,
+                                                        LastName =  @lastName, 
+                                                        SlackHandle = @handle, 
+                                                        CohortId = @cId         
+                                        WHERE Id = @id";
+                    cmd.Parameters.Add(new SqlParameter("@firstName", model.Student.FirstName));
+                    cmd.Parameters.Add(new SqlParameter("@lastName", model.Student.LastName));
+                    cmd.Parameters.Add(new SqlParameter("@handle", model.Student.SlackHandle));
+                    cmd.Parameters.Add(new SqlParameter("@cId", model.Student.CohortId));
+                    cmd.Parameters.Add(new SqlParameter("@Id", id));
+
+                    cmd.ExecuteNonQuery();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+        }
+
     }
 }

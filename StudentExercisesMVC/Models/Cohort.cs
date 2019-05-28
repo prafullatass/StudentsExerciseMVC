@@ -10,7 +10,7 @@ namespace StudentExercisesMVC.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
+        [Required( ErrorMessage = "Cohort Name is required")]
         [StringLength(80)]
         [Display(Name = " Cohort")]
         public string CohortName { get; set; }

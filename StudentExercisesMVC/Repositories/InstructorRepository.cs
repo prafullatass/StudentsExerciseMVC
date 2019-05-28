@@ -150,7 +150,7 @@ namespace StudentExercisesMVC.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Student SET FirstName = @firstName,
+                    cmd.CommandText = @"UPDATE Instructor SET FirstName = @firstName,
                                                         LastName =  @lastName, 
                                                         SlackHandle = @handle, 
                                                         Specality = @Specality,
@@ -161,7 +161,7 @@ namespace StudentExercisesMVC.Repositories
                     cmd.Parameters.Add(new SqlParameter("@Specality", instructor.Specality));
                     cmd.Parameters.Add(new SqlParameter("@handle", instructor.SlackHandle));
                     cmd.Parameters.Add(new SqlParameter("@cId", instructor.CohortId));
-                    cmd.Parameters.Add(new SqlParameter("@Id", instructor.Id));
+                    cmd.Parameters.Add(new SqlParameter("@id", instructor.Id));
 
                     cmd.ExecuteNonQuery();
                 }
