@@ -84,7 +84,6 @@ namespace StudentExercisesMVC.Controllers
         {
             try
             {
-               
                 InstructorRepository.UpdateInstructor(instructorModel.Instructor);
                 // TODO: Add update logic here
 

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using StudentExercisesMVC.Models;
 using StudentExercisesMVC.Models.ViewModels;
 using System.Windows;
+using StudentExercisesMVC.Repositories;
 
 namespace StudentExercisesMVC.Controllers
 {
@@ -260,8 +261,16 @@ namespace StudentExercisesMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-        
-            [HttpPost]
+
+        public ActionResult AssignExercise(int id)
+        {
+            Student stud = StudentsRepository.getSingleStudent(id);
+            AssignExercises model = new AssignExercises(stud);
+            return View(model);
+        }
+
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AssignExercise([FromRoute]int id, [FromForm] StudentEditViewModel model)
         {

@@ -1,0 +1,52 @@
+﻿@model StudentExercisesMVC.Models.ViewModels.AssignExercises
+
+@{
+    ViewData["Title"] = "AssignExercise";
+}
+
+<h1>AssignExercise</h1>
+
+    <h4>Student</h4>
+    <hr />
+<div class="FlexContainer">
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.student.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.student.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.student.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.student.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.student.SlackHandle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.student.SlackHandle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.student.CohortId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.student.Cohort.CohortName)
+        </dd>
+    </dl>
+    <div>
+        @foreach (var item in Model.AssignedExercises)
+        {
+            @Html.DisplayFor(modelItem => item.Language)
+            @Html.DisplayFor(modelItem => item.Title)
+            @Html.Display("br ");
+
+
+        }
+    </div>
+    </div>
+<div>
+    @Html.ActionLink("Assign Exercises", "AssignExercises", new {  id = Model.student.Id  }) |
+    <a asp-action="Index">Back to List</a>
+</div>
